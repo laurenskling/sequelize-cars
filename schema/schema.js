@@ -20,6 +20,10 @@ const Query = new GraphQLObjectType({
           type: GraphQLInt,
           description: `Fetch a car by its ID.`,
         },
+        limit: {
+          type: GraphQLInt,
+          description: `Limit the result.`,
+        },
         licensePlate: {
           type: GraphQLString,
           description: `Fetch a car by its license plate.`,
@@ -33,7 +37,7 @@ const Query = new GraphQLObjectType({
           description: `Enum 'oec', 'wd'.`,
         },
       },
-      resolve(root, { origin, ...args}) {
+      resolve(root, { origin, limit, ...args}) {
         if (origin === 'wd') {
           args.hexonId = { $ne: 0 };
         } else if (origin === 'oec') {
@@ -41,6 +45,7 @@ const Query = new GraphQLObjectType({
         }
         return Db.models.car.findAll({
           where: args,
+          limit,
         });
       },
     },

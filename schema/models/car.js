@@ -153,7 +153,13 @@ const carType = new GraphQLObjectType({
     wdFeed: {
       type: new GraphQLList(wdType),
       description: `The car its feed history from wd.`,
-      resolve: (car) => car.getWdFeeds(),
+      args: {
+        limit: {
+          type: GraphQLInt,
+          description: `Limit the result.`,
+        },
+      },
+      resolve: (car, { limit }) => car.getWdFeeds({ limit }),
     },
     oecFeed: {
       type: new GraphQLList(oecType),

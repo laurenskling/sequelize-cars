@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "supervisor preprocessor.js"
+    "start:dev": "supervisor preprocessor.js",
+    "start:prod": "NODE_ENV=production supervisor preprocessor.js"
   },
   "author": "laurens@goedideemedia.nl",
   "license": "ISC",

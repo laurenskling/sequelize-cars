@@ -76,7 +76,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
     },
     mileage: {
-      field: 'kilometerstand',
+      field: 'km_stand',
       type: DataTypes.INTEGER,
     },
     year: {
