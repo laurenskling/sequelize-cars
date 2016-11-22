@@ -135,6 +135,11 @@ const carType = new GraphQLObjectType({
       type: GraphQLString,
       description: `The given Marktplaats key.`,
     },
+    image: {
+      type: new GraphQLList(imageType),
+      description: `The car its first image.`,
+      resolve: (car) => car.getImages({ order: [['order', 'ASC']], limit: 1 }),
+    },
     images: {
       type: new GraphQLList(imageType),
       description: `The car its images.`,
@@ -159,12 +164,18 @@ const carType = new GraphQLObjectType({
           description: `Limit the result.`,
         },
       },
-      resolve: (car, { limit }) => car.getWdFeeds({ limit }),
+      resolve: (car, { limit = 5 }) => car.getWdFeeds({ limit }),
     },
     oecFeed: {
       type: new GraphQLList(oecType),
       description: `The car its feed history from oec.`,
-      resolve: (car) => car.getOecFeeds(),
+      args: {
+        limit: {
+          type: GraphQLInt,
+          description: `Limit the result.`,
+        },
+      },
+      resolve: (car, { limit = 5 }) => car.getOecFeeds({ limit }),
     },
     origin: {
       type: GraphQLString,
@@ -173,12 +184,24 @@ const carType = new GraphQLObjectType({
     nakFeed: {
       type: new GraphQLList(nakType),
       description: `The car its feed to NAK.`,
-      resolve: (car) => car.getNakFeeds(),
+      args: {
+        limit: {
+          type: GraphQLInt,
+          description: `Limit the result.`,
+        },
+      },
+      resolve: (car, { limit = 5 }) => car.getNakFeeds({ limit }),
     },
     mpFeed: {
       type: new GraphQLList(mpType),
       description: `The car its feed to MP.`,
-      resolve: (car) => car.getMpFeeds(),
+      args: {
+        limit: {
+          type: GraphQLInt,
+          description: `Limit the result.`,
+        },
+      },
+      resolve: (car, { limit = 5 }) => car.getMpFeeds({ limit }),
     },
   }),
 });

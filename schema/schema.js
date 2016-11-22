@@ -20,6 +20,10 @@ const Query = new GraphQLObjectType({
           type: GraphQLInt,
           description: `Fetch a car by its ID.`,
         },
+        hexonId: {
+          type: GraphQLInt,
+          description: `Fetch a car by its Hexon ID.`,
+        },
         limit: {
           type: GraphQLInt,
           description: `Limit the result.`,
@@ -37,7 +41,7 @@ const Query = new GraphQLObjectType({
           description: `Enum 'oec', 'wd'.`,
         },
       },
-      resolve(root, { origin, limit, ...args}) {
+      resolve(root, { origin, limit = 10, ...args}) {
         if (origin === 'wd') {
           args.hexonId = { $ne: 0 };
         } else if (origin === 'oec') {
